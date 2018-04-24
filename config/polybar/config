@@ -1,0 +1,191 @@
+[colors]
+background = #CC070e14
+background-alt = #CC070e14
+foreground = #dfdfdfdf
+foreground-alt = #dfdfdfdf
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+bg = #DA222222
+maia =  #259E83
+white = #e8e8e8
+red =   #ff4d4d
+grey =  #33
+clear = #00
+yellow = #f9a825
+
+[bar/top]
+monitor = DP-2.8
+width = 100%
+height = 27
+radius = 0
+fixed-center = true
+override-redirect = false
+wmrestack = i3
+offset-x = 0
+offset-y = 0
+underline-size = 2
+underline-color = #00f
+border-bottom = 2
+border-bottom-color = #333
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = #f00
+
+border-size = 10
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 0
+
+font-0 = Shure\ Tech\ Mono\ Nerd\ Font:pixelsize=14;3
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;0
+
+modules-left = i3
+modules-center =
+modules-right = pavolume separator date
+
+[bar/bottom]
+monitor = DP-2.8
+width = 100%
+height = 27
+radius = 0
+fixed-center = true
+underline-size = 2
+underline-color = #00f
+border-top = 2
+border-top-color = #333
+
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = #ffffff
+
+border-size = 10
+border-color = #00000000
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Shure\ Tech\ Mono\ Nerd\ Font:pixelsize=14;3
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;0
+
+modules-left =memory separator cpu separator eth separator filesystem
+modules-center =
+modules-right =
+
+tray-position = right
+tray-padding = 5
+
+[module/separator]
+type = custom/text
+content = " | "
+content-foreground = #dfdfdf
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${colors.primary}
+label-focused-padding = 2
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+label-visible = %index%
+label-visible-foreground = 2
+label-visible-padding = 2
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+mount-1 = /home/matt
+
+spacing = 2
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline =
+format-mounted = <label-mounted>
+label-mounted = %mountpoint% %free%
+format-mounted-underline = #80f4ff
+
+
+[module/cpu]
+type = internal/cpu
+interval = 5
+format-prefix = "C: "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #4fff4f
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 5
+format-prefix = "M: "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #ff4f4f
+label = %percentage_used%%
+
+[module/eth]
+type = internal/network
+interface = eno1
+interval = 5
+format-connected-underline = #55aa55
+format-connected-prefix = "Eth: "
+format-connected-foreground-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = "Eth: down"
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 5
+date = "%a %m/%d/%y"
+time = "%l:%M %P"
+format-underline = #0a6cf5
+label = %date% %time%
+
+[module/pavolume]
+type = custom/script
+tail = true
+label = "%output%"
+exec = ~/.config/polybar/pavolume.sh --listen
+click-left = amixer -D pulse sset Master toggle
+click-right = exec pavucontrol &
+scroll-down = amixer -D pulse sset Master 2%+
+scroll-up = amixer -D pulse sset Master 2%-
+format-underline = #ff993f
+
+[module/xwindow]
+type = internal/xwindow
+
+label = %title%
+label-foreground = ${colors.white}
+
+[settings]
+throttle-output = 10
+throttle-output-for = 10
+throttle-input-for = 30
